@@ -13,7 +13,7 @@ surplus_mandates as
     inner join user_period_filter
     on ssm.member_id = user_period_filter.member_id
     and ssm.period_id = user_period_filter.period_id
---    where collector_type = 'CheckIn'
+    where collector_type = 'CheckIn'
     group by 1,2,3
 )
 
