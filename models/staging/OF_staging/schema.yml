@@ -1,0 +1,26 @@
+version: 2
+
+models:
+    - name: stg_user_period_filter
+      description: Staged data from the periods table to be used for filtering member_ids and periods.
+      columns:
+        - name: period_id
+          desciption: The primary key for periods.
+          tests:
+            - unique
+            - not_null
+    - name: stg_surplus_mandates
+      columns:
+        - name: collector_type
+          description: '{{doc("collector_type")}}'
+          tests:
+            - accepted_values:
+                values:
+                  - CheckIn
+                  - Null
+        - name: period_id
+          tests:
+            - relationships:
+                to: ref('stg_user_period_filter')
+                field: period_id
+            

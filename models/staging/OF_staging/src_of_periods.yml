@@ -1,0 +1,37 @@
+version: 2
+
+sources: 
+  - name: output_looker
+    description: It is the used schema for posting output clean looker data
+    database: unified-firefly-174009
+    tables: 
+      - name: sq_periods
+        description: output of scheduled queries as of tables running every hour and giving us the users and periods information
+        columns:
+          - name: id
+            test:
+              - unique
+              - not_null
+      - name: sq_surplus_mandates
+        columns:
+          - name: id
+            test:
+              - unique
+              - not_null
+
+  - name: mysql_stitch_raw2
+    description: raw_stitch database
+    database: unified-firefly-174009
+    tables: 
+      - name: membership_settings
+        description: membership_level_settings
+        loaded_at_field: updated_at
+        freshness:
+          warn_after: {count: 1, period: day}
+          error_after: {count: 3, period: day}
+        columns:
+          - name: id
+            test:
+              - unique
+              - not_null
+
